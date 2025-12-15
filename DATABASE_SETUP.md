@@ -132,6 +132,24 @@ CREATE TABLE IF NOT EXISTS notifications (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Waste segregation schedules
+CREATE TABLE IF NOT EXISTS waste_segregation_schedules (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  waste_type TEXT CHECK (waste_type IN ('biodegradable', 'non_biodegradable', 'recyclable', 'hazardous', 'plastics', 'metals', 'paper', 'glass', 'electronics')) NOT NULL,
+  schedule_date TIMESTAMP WITH TIME ZONE NOT NULL,
+  frequency TEXT CHECK (frequency IN ('one_time', 'daily', 'weekly', 'monthly')) DEFAULT 'one_time',
+  end_date TIMESTAMP WITH TIME ZONE,
+  assigned_staff UUID REFERENCES profiles(id),
+  route_id UUID REFERENCES routes(id),
+  barangay TEXT,
+  status TEXT CHECK (status IN ('scheduled', 'in_progress', 'completed', 'cancelled')) DEFAULT 'scheduled',
+  priority TEXT CHECK (priority IN ('low', 'medium', 'high', 'urgent')) DEFAULT 'medium',
+  notes TEXT,
+  created_by UUID REFERENCES profiles(id),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Sustainability metrics
 CREATE TABLE IF NOT EXISTS sustainability_metrics (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -173,6 +191,17 @@ CREATE POLICY "Users can view their own reports" ON citizen_reports
   FOR SELECT USING (auth.uid() = reporter_id OR 
     EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('admin', 'supervisor')));
 
+-- Waste segregation schedules policies
+CREATE POLICY "Staff can view assigned schedules" ON waste_segregation_schedules
+  FOR SELECT USING (auth.uid() = assigned_staff OR
+    EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('admin', 'supervisor')));
+
+CREATE POLICY "Admins can create schedules" ON waste_segregation_schedules
+  FOR INSERT WITH CHECK (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('admin', 'supervisor')));
+
+CREATE POLICY "Admins can update schedules" ON waste_segregation_schedules
+  FOR UPDATE USING (EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('admin', 'supervisor')));
+
 -- Notifications policies
 CREATE POLICY "Users can view their own notifications" ON notifications
   FOR SELECT USING (auth.uid() = user_id);
@@ -191,6 +220,7 @@ After running the SQL, check the **Table Editor** to confirm all tables are crea
 - compost_operations
 - citizen_reports
 - notifications
+- waste_segregation_schedules
 - sustainability_metrics
 
 ## 🎯 Next Steps

@@ -1,15 +1,16 @@
-import { 
-  HomeIcon, 
-  UsersIcon, 
-  ClipboardDocumentListIcon, 
+import {
+  HomeIcon,
+  UsersIcon,
+  ClipboardDocumentListIcon,
   QrCodeIcon,
   MapIcon,
   BellIcon,
-  DocumentChartBarIcon, 
-  ChartBarIcon, 
+  DocumentChartBarIcon,
+  ChartBarIcon,
   CogIcon,
   XMarkIcon,
-  SparklesIcon
+  SparklesIcon,
+  CalendarDaysIcon
 } from '@heroicons/react/24/outline'
 import { useAuth } from '../../contexts/AuthContext'
 import logo from '../../assets/logo.jpg'
@@ -21,6 +22,7 @@ const Sidebar = ({ activeTab, setActiveTab, onClose }) => {
     { name: 'Overview', tab: 'overview', icon: HomeIcon, description: 'Dashboard overview' },
     { name: 'Workforce', tab: 'workforce', icon: UsersIcon, description: 'Manage staff' },
     { name: 'Tasks', tab: 'tasks', icon: ClipboardDocumentListIcon, description: 'Task management' },
+    { name: 'Waste Segregation', tab: 'segregation', icon: CalendarDaysIcon, description: 'Schedule waste collection' },
     { name: 'Attendance', tab: 'attendance', icon: QrCodeIcon, description: 'QR code attendance' },
     { name: 'Location Analytics', tab: 'location', icon: MapIcon, description: 'GPS data & insights' },
     { name: 'Alert Management', tab: 'alerts', icon: BellIcon, description: 'Mobile response alerts' },

@@ -12,6 +12,7 @@ import AlertManagement from './AlertManagement'
 import Reports from './Reports'
 import Analytics from './Analytics'
 import Settings from './Settings'
+import WasteSegregationScheduling from './WasteSegregationScheduling'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const Dashboard = () => {
@@ -54,6 +55,8 @@ const Dashboard = () => {
         return <WorkforceManagement />
       case 'tasks':
         return <TaskManagement />
+      case 'segregation':
+        return <WasteSegregationScheduling />
       case 'attendance':
         return <AttendanceManagement />
       case 'location':

@@ -37,7 +37,7 @@ const Navigation = () => {
                         SANGBO BERDE
                       </h1>
                       <p className="text-sm text-gray-600 group-hover:text-green-600 transition-colors duration-300">
-                        City-Scale Waste Collection
+                       City-Scale Waste Collection
                       </p>
                     </div>
                   </Link>
