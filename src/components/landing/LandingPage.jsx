@@ -21,6 +21,7 @@ const LandingPage = () => {
   const [activeFeature, setActiveFeature] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [hasAccess, setHasAccess] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -107,9 +108,59 @@ const LandingPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative">
       {/* Navigation */}
       <Navigation />
+
+      {/* Paywall Overlay */}
+      {!hasAccess && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-8 text-center">
+            <div className="mb-6">
+              <div className="mx-auto h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                <ShieldCheckIcon className="h-8 w-8 text-green-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Access Restricted
+              </h2>
+              <p className="text-gray-600">
+                Unlock full access to SANGBO BERDE's advanced waste management features.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <button
+                onClick={() => {
+                  const pricingSection = document.getElementById('pricing');
+                  if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                    setHasAccess(false); // Keep restricted until they actually purchase
+                  }
+                }}
+                className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300"
+              >
+                View Pricing Plans
+              </button>
+
+              <button
+                onClick={() => setHasAccess(true)}
+                className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300"
+              >
+                Continue with Limited Access
+              </button>
+            </div>
+
+            <div className="mt-6 text-sm text-gray-500">
+              <p>Full features require an active subscription</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Blur effect when paywall is active */}
+      {!hasAccess && (
+        <div className="fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm z-40 pointer-events-none"></div>
+      )}
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 py-20 pt-32 overflow-hidden">
@@ -293,155 +344,6 @@ const LandingPage = () => {
                 ))}
               </ul>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Unlock Full Features
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose the plan that best fits your organization's needs and unlock advanced waste management capabilities.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Basic Plan - 1K Pesos */}
-            <div className="bg-gray-50 rounded-lg p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  ₱1,000
-                  <span className="text-lg font-normal text-gray-600">/month</span>
-                </div>
-                <p className="text-gray-600">Essential waste management features</p>
-              </div>
-              <ul className="text-left space-y-3 mb-8">
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Basic workforce management</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Community reporting portal</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Mobile alerts for staff</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Basic analytics dashboard</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Email support</span>
-                </li>
-              </ul>
-              <button className="w-full bg-gray-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700 transition-colors duration-300">
-                Get Started
-              </button>
-            </div>
-
-            {/* Professional Plan - 3K Pesos */}
-            <div className="bg-green-50 rounded-lg p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl border-2 border-green-500 relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-medium">
-                  Most Popular
-                </span>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  ₱3,000
-                  <span className="text-lg font-normal text-gray-600">/month</span>
-                </div>
-                <p className="text-gray-600">Advanced features for growing operations</p>
-              </div>
-              <ul className="text-left space-y-3 mb-8">
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">All Basic features</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">GPS-based attendance tracking</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Advanced analytics & reporting</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">QR code check-in/check-out</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Priority phone support</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Custom integrations</span>
-                </li>
-              </ul>
-              <button className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300">
-                Upgrade Now
-              </button>
-            </div>
-
-            {/* Enterprise Plan - 5K Pesos */}
-            <div className="bg-gray-50 rounded-lg p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
-                <div className="text-4xl font-bold text-green-600 mb-2">
-                  ₱5,000
-                  <span className="text-lg font-normal text-gray-600">/month</span>
-                </div>
-                <p className="text-gray-600">Complete solution for large-scale operations</p>
-              </div>
-              <ul className="text-left space-y-3 mb-8">
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">All Professional features</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Unlimited user accounts</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Advanced AI analytics</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">24/7 dedicated support</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">Custom API integrations</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckIcon className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                  <span className="text-gray-700">On-site training & setup</span>
-                </li>
-              </ul>
-              <button className="w-full bg-gray-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700 transition-colors duration-300">
-                Contact Sales
-              </button>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-4">
-              All plans include a 14-day free trial. No credit card required.
-            </p>
-            <p className="text-sm text-gray-500">
-              Prices are in Philippine Pesos (₱) and exclude applicable taxes.
-            </p>
           </div>
         </div>
       </section>
