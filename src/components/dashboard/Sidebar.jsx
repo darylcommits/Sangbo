@@ -13,7 +13,7 @@ import {
   CalendarDaysIcon
 } from '@heroicons/react/24/outline'
 import { useAuth } from '../../contexts/AuthContext'
-import logo from '../../assets/logo.jpg'
+import logo from '../../assets/logo2.jpg'
 
 const Sidebar = ({ activeTab, setActiveTab, onClose }) => {
   const { profile } = useAuth()
