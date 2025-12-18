@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, ArrowRightIcon, SparklesIcon, UserIcon, EnvelopeIcon, PhoneIcon, MapPinIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
-import logo from '../../assets/logo.jpg'
+import logo from '../../assets/logo2.jpg'
 
 const SignupForm = ({ onToggleMode }) => {
   const [formData, setFormData] = useState({
