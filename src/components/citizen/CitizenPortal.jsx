@@ -18,7 +18,7 @@ import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon
 } from '@heroicons/react/24/outline'
-import logo from '../../assets/logo.jpg'
+import logo from '../../assets/logo2.jpg'
 
 const CitizenPortal = () => {
   const { profile, signOut } = useAuth()
