@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Navigation from './Navigation'
 import AboutSection from './AboutSection'
-import logo from '../../assets/logo.jpg'
+import AIWidget from './AIWidget'
+import logo from '../../assets/logo2.jpg'
 import { 
   ChartBarIcon, 
   TruckIcon, 
@@ -21,7 +22,6 @@ const LandingPage = () => {
   const [activeFeature, setActiveFeature] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [hasAccess, setHasAccess] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
@@ -108,59 +108,9 @@ const LandingPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-white relative">
+    <div className="min-h-screen bg-white">
       {/* Navigation */}
       <Navigation />
-
-      {/* Paywall Overlay */}
-      {!hasAccess && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-8 text-center">
-            <div className="mb-6">
-              <div className="mx-auto h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                <ShieldCheckIcon className="h-8 w-8 text-green-600" />
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Access Restricted
-              </h2>
-              <p className="text-gray-600">
-                Unlock full access to SANGBO BERDE's advanced waste management features.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <button
-                onClick={() => {
-                  const pricingSection = document.getElementById('pricing');
-                  if (pricingSection) {
-                    pricingSection.scrollIntoView({ behavior: 'smooth' });
-                    setHasAccess(false); // Keep restricted until they actually purchase
-                  }
-                }}
-                className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-300"
-              >
-                View Pricing Plans
-              </button>
-
-              <button
-                onClick={() => setHasAccess(true)}
-                className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300"
-              >
-                Continue with Limited Access
-              </button>
-            </div>
-
-            <div className="mt-6 text-sm text-gray-500">
-              <p>Full features require an active subscription</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Blur effect when paywall is active */}
-      {!hasAccess && (
-        <div className="fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm z-40 pointer-events-none"></div>
-      )}
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 py-20 pt-32 overflow-hidden">
@@ -653,6 +603,9 @@ const LandingPage = () => {
           </div>
         </div>
       </footer>
+
+      {/* AI Widget */}
+      <AIWidget />
     </div>
   )
 }
