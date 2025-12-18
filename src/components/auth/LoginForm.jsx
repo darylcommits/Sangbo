@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { EyeIcon, EyeSlashIcon, ArrowRightIcon, SparklesIcon } from '@heroicons/react/24/outline'
-import logo from '../../assets/logo.jpg'
+import logo from '../../assets/logo2.jpg'
 
 const LoginForm = ({ onToggleMode }) => {
   const [email, setEmail] = useState('')
