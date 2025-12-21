@@ -162,13 +162,17 @@ const AboutSection = () => {
             }}
           >
             <h3 className="text-3xl font-bold mb-6">Our Vision & Mission</h3>
-            <p className="text-xl max-w-4xl mx-auto leading-relaxed">
-            VISION
-To be the leading provider of sustainable waste management practices solutions in the region of 2035.
-
-MISSION
-To drive sustainable waste solutions smart workforce management, community engagement, and HR-powered mobile service that fosters cleaner cities and inclusive growth.
-            </p>
+            <div className="text-xl max-w-4xl mx-auto leading-relaxed space-y-6">
+              <div>
+                <p className="font-semibold mb-2">VISION</p>
+                <p>To be the leading provider of sustainable waste management practices solutions in the region of 2035.</p>
+              </div>
+              
+              <div>
+                <p className="font-semibold mb-2">MISSION</p>
+                <p>To drive sustainable waste solutions smart workforce management, community engagement, and HR-powered mobile service that fosters cleaner cities and inclusive growth.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
